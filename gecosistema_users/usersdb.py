@@ -133,7 +133,7 @@ class UsersDB(SqliteDB):
 
             if sendmail and isfile(self.fileconf):
                 system_mail(mail, sformat(text, env), "User Credentials for the Webgis.", self.fileconf)
-            return mail,name
+            return mail
 
         return False
 
