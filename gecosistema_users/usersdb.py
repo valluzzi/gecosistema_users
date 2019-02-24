@@ -122,14 +122,15 @@ class UsersDB(SqliteDB):
         UPDATE [users] SET [enabled]={enabled},[token]=md5([mail]||'{password}') WHERE [token]='{token}';
         SELECT [mail],[name],[enabled] FROM [users]  WHERE [token]=md5([mail]||'{password}');
         """
-        (mail,name,enabled) = self.execute(sql,env,outputmode='first-row',verbose=True)
+        (mail,name,enabled) = self.execute(sql,env,outputmode='first-row',verbose=False)
 
         # A mail to the user
         if mail:
             user = {
                 "name":name,
                 "mail":mail,
-                "enabled":enabled
+                "enabled":enabled,
+                "password":env["password"]
             }
             text = """</br>
                     Login at <a href='http://localhost/webgis/private/{mail}'>http://localhost/webgis/</a></br>
@@ -137,7 +138,7 @@ class UsersDB(SqliteDB):
                     """
 
             if sendmail and isfile(self.fileconf):
-                system_mail(mail, sformat(text, user), "User Credentials for the Webgis.", self.fileconf,verbose=True)
+                system_mail(mail, sformat(text, user), "User Credentials for the Webgis.", self.fileconf,verbose=False)
             return user
 
         return False
