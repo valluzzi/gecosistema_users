@@ -126,18 +126,19 @@ class UsersDB(SqliteDB):
 
         # A mail to the user
         if mail:
+            user = {
+                "name":name,
+                "mail":mail,
+                "enabled":enabled
+            }
             text = """</br>
                     Login at <a href='http://localhost/webgis/private/{mail}'>http://localhost/webgis/</a></br>
                     Your password is:<b>{password}</b></br>
                     """
 
             if sendmail and isfile(self.fileconf):
-                system_mail(mail, sformat(text, env), "User Credentials for the Webgis.", self.fileconf,verbose=True)
-            return {
-                "name":name,
-                "mail":mail,
-                "enabled":enabled
-            }
+                system_mail(mail, sformat(text, user), "User Credentials for the Webgis.", self.fileconf,verbose=True)
+            return user
 
         return False
 
