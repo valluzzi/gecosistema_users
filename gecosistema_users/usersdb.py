@@ -97,7 +97,7 @@ class UsersDB(SqliteDB):
         env["__token__"] = __token__
 
         #send a mail to Administrators
-        administrators = db.execute("""SELECT GROUP_CONCAT([mail],',') FROM [users] WHERE [role] ='admin';""", env,
+        administrators = self.execute("""SELECT GROUP_CONCAT([mail],',') FROM [users] WHERE [role] ='admin';""", env,
                                outputmode="scalar", verbose=False)
         if administrators and sendmail and isfile(self.fileconf):
             text = """</br>
