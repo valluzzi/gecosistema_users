@@ -14,7 +14,7 @@ if os.path.isfile("version.txt"):
                 w.write(version)
 
 setuptools.setup(
-    name="gecosistema_database",
+    name="gecosistema_users",
     version=version,
     author="Valerio Luzzi",
     author_email="valluzzi@gmail.com",
